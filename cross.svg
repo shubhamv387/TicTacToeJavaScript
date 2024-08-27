@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <path d="
+    M 12 2 
+    L 2 12 
+    L 22 32 
+    L 2 52 
+    L 12 62 
+    L 32 42 
+    L 52 62 
+    L 62 52 
+    L 42 32 
+    L 62 12 
+    L 52 2 
+    L 32 22 
+    Z
+  " fill="yellow"/>
+</svg>
