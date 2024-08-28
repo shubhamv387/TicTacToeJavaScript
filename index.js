@@ -26,14 +26,15 @@ const winningCondition = generateWinningConditions(size_of_board)
 
 gameBoard.addEventListener('click', playGame)
 resetBtn.addEventListener('click', resetGame)
+window.addEventListener('resize', designingBoard)
 
-function designingBoard(size_of_board) {
+function designingBoard() {
   gameBoard.style.height =
     window.innerWidth < window.innerHeight ? window.innerWidth * 0.85 + 'px' : window.innerHeight * 0.85 + 'px'
   gameBoard.style.width =
-    window.innerWidth < window.innerHeight ? window.innerWidth * 0.85 + 'px' : window.innerHeight * 0.85 + 'px'
-  gameBoard.style.maxHeight = '600px'
-  gameBoard.style.maxWidth = '600px'
+    window.innerWidth > window.innerHeight ? window.innerHeight * 0.85 + 'px' : window.innerWidth * 0.85 + 'px'
+  gameBoard.style.maxHeight = 'calc(100vh - 285px)'
+  gameBoard.style.maxWidth = 'calc(100vh - 285px)'
   gameBoard.style.background = '#323232'
   gameBoard.style.border = '1px solid #fff'
 }
@@ -46,7 +47,7 @@ function createCells(size_of_board) {
       cell.classList = 'cell curser_pointer'
       cell.style.setProperty('height', 100 / size_of_board + '%')
       cell.style.setProperty('width', 100 / size_of_board + '%')
-      // cell.textContent = index;
+      // cell.textContent = index
       cell.id = index
       gameBoard.append(cell)
     })
@@ -69,6 +70,7 @@ function playGame(e) {
   undoStack.push({ cell: e.target, turn: winningTurn })
   if (redoStack.length) redoStack.length = 0
 
+  manageUndoRedoBtn()
   turn = turn === 'circle' ? 'cross' : 'circle'
 
   displayInfo.textContent = 'It is now ' + turn + "'s turn"
@@ -105,6 +107,7 @@ function checkWinner(turn) {
       displayInfo.textContent = `${turn.toUpperCase()} "WINS!"`
       undoStack.length = 0
       redoStack.length = 0
+      manageUndoRedoBtn()
       displayInfo.style.color = turn === 'cross' ? 'yellow' : 'aqua'
       resetBtn.disabled = false
       gameBoard.removeEventListener('click', playGame)
@@ -132,6 +135,7 @@ function resetGame() {
   no_of_clicks = 0
   undoStack.length = 0
   redoStack.length = 0
+  manageUndoRedoBtn()
   resetBtn.disabled = true
   gameBoard.addEventListener('click', playGame)
 }
@@ -193,6 +197,7 @@ function undoMove() {
   no_of_clicks--
   resetBtn.disabled = true
   gameBoard.addEventListener('click', playGame)
+  manageUndoRedoBtn()
 }
 
 function redoMove() {
@@ -208,6 +213,8 @@ function redoMove() {
   displayInfo.textContent = 'It is now ' + turn + "'s turn"
   no_of_clicks++
   if (no_of_clicks >= size_of_board * size_of_board) gameOver()
+
+  manageUndoRedoBtn()
 }
 
 function gameOver() {
@@ -216,4 +223,13 @@ function gameOver() {
 
   displayInfo.textContent = 'Game Over!'
   displayInfo.style.color = '#fff'
+}
+
+function manageUndoRedoBtn() {
+  const redoBtn = document.getElementById('redo-btn')
+  const undoBtn = document.getElementById('undo-btn')
+  if (redoStack.length && redoBtn) redoBtn.disabled = false
+  else redoBtn.disabled = true
+  if (undoStack.length && undoBtn) undoBtn.disabled = false
+  else undoBtn.disabled = true
 }

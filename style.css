@@ -1,10 +1,14 @@
 :root {
-  --cell-size: 100px;
+  --cell-size: 6.25rem;
 }
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+html {
+  font-size: 20px;
 }
 
 body {
@@ -33,21 +37,58 @@ body {
 
 .game-info {
   display: flex;
+  flex-direction: column;
   gap: 1.3rem;
+  width: 100%;
+  max-width: 600px;
+}
 
+.game-info-texts,
+.game-info-btns {
+  display: flex;
+  gap: 1.3rem;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.game-info-texts {
   & p {
-    font-size: 23px;
+    font-size: 1.45rem;
     color: chartreuse;
     margin-block: 1.5rem;
+    white-space: nowrap;
+  }
+}
+
+.game-info-btns {
+  margin-block: 1.5rem;
+  width: 100%;
+
+  & button {
+    font-size: 1rem;
+    padding-inline: 1rem;
+    padding-block: 0.35rem;
+    border-radius: 0.35rem;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background: magenta;
+    color: #fff;
+  }
+
+  & button:disabled {
+    background: #6c757d;
+    color: #ccc;
+    cursor: auto;
   }
 }
 
 #reset-game,
 #reset-game:disabled {
-  font-size: 20px;
-  padding-inline: 20px;
-  padding-block: 10px;
-  border-radius: 8px;
+  font-size: 1.25rem;
+  padding-inline: 1.25rem;
+  padding-block: 0.625rem;
+  border-radius: 0.5rem;
+  margin-bottom: 2rem;
 }
 
 #reset-game:disabled {
@@ -67,7 +108,7 @@ body {
 .cell {
   height: var(--cell-size);
   width: var(--cell-size);
-  border: 1px solid #e0e0e0;
+  border: 1px solid #fff;
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -101,4 +142,53 @@ body {
   background: url(cross.svg) center;
   background-size: cover;
   animation: grow 70ms ease-in;
+}
+
+/* .cross::before,
+.cross::after {
+  content: '';
+  background: yellow;
+  position: absolute;
+}
+
+.cross:before {
+  width: 20%;
+  height: 100%;
+  left: 50%;
+  margin-left: -10%;
+}
+
+.cross:after {
+  width: 100%;
+  height: 20%;
+  top: 50%;
+  margin-top: -10%;
+} */
+
+@media screen and (max-width: 1023px) {
+  html {
+    font-size: 20px;
+  }
+
+  .game-info-btns {
+    display: flex;
+  }
+  .game-info-texts {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .game-info-btns {
+    display: none;
+  }
+  .game-info-texts {
+    display: flex;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  html {
+    font-size: 16px;
+  }
 }

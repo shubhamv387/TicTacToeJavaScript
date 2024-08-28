@@ -10,8 +10,14 @@
     <p class="info"></p>
     <div class="gameBoard"></div>
     <div class="game-info">
-      <p>Undo: ctrl + z</p>
-      <p>Redo: ctrl + y</p>
+      <div class="game-info-texts">
+        <p>Undo: ctrl + z</p>
+        <p>Redo: ctrl + y</p>
+      </div>
+      <div class="game-info-btns">
+        <button id="undo-btn" disabled onclick="undoMove()">Undo</button>
+        <button id="redo-btn" disabled onclick="redoMove()">Redo</button>
+      </div>
     </div>
     <button disabled type="button" id="reset-game">Restart</button>
     <script src="index.js"></script>
